@@ -23,11 +23,11 @@ module.exports = (grunt) ->
         objectToExport: 'scrollTo'
         globalAlias: 'scrollTo'
         deps:
-          'default': ['$', 'SimpleModule']
-          amd: ['jquery', 'simple-module']
-          cjs: ['jquery', 'simple-module']
+          'default': ['$']
+          amd: ['jquery']
+          cjs: ['jquery']
           global:
-            items: ['jQuery', 'SimpleModule']
+            items: ['jQuery']
             prefix: ''
 
     watch:
