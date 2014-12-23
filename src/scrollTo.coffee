@@ -2,40 +2,50 @@
 scrollTo =  (opts) ->
   defaultOpts =
     target: null
-    position: null
     container: null
-    axis: 'x'
+    axis: 'y'
     offset:
-      left: 0
-      top: 0
+      x: 0
+      y: 0
     duration: 500
     animation: true
     callback: $.noop
-  
+
   opts = $.extend defaultOpts, opts
   $target = $(opts.target) if opts.target
-  $target = opts.position unless $target
 
-  throw new Error "simple-scrollTo: target or position option is invalid" unless $target
+  throw new Error "simple-scrollTo: target option is invalid" unless $target or opts.offset
 
   $container = if opts.container then $(opts.container) else $('body, html')
 
+  unless typeof opts.offset is 'object'
+    opts.offset =
+      x: opts.offset
+      y: opts.offset
+
   #set offset
-  if $target instanceof jQuery
+  if $target
     targetOffset = $target.offset()
     containerOffset = $container.offset() || {top: 0, left: 0}
     offset =
-      top: targetOffset.top - containerOffset.top - opts.offset.top
-      left: targetOffset.left - containerOffset.left - opts.offset.top
+      y: targetOffset.top - containerOffset.top - opts.offset.y
+      x: targetOffset.left - containerOffset.left - opts.offset.x
   else
-    offset = $target
+    offset = opts.offset
 
   #run it!
   if opts.animation
     options = {}
-    options.scrollTop = offset.top if opts.axis.charAt('x') isnt -1
-    options.scrollLeft = offset.left if opts.axis.charAt('y') isnt -1
+    if opts.axis is 'y'
+      options.scrollTop = offset.y
+    else if offset.axis is 'x'
+      options.scrollLeft = offset.x
+    else
+      options =
+        scrollTop: offset.y
+        scrollLeft: offset.x
 
+    #prevent trigger twice callback
     hasCalled = false
     fakeCallBack = ->
       return if hasCalled
@@ -43,9 +53,15 @@ scrollTo =  (opts) ->
       opts.callback()
     $container.animate options, opts.duration, fakeCallBack
     null
+
   else
-    $container.scrollLeft(offset.left) if opts.axis.charAt('y') isnt -1
-    $container.scrollTop(offset.top) if opts.axis.charAt('x') isnt -1
+    if opts.axis is 'y'
+      $container.scrollTop(offset.y)
+    else if opts.axis is 'x'
+      $container.scrollLeft(offset.x)
+    else
+      $container.scrollLeft(offset.x)
+      $container.scrollTop(offset.y)
     opts.callback()
     null
 
