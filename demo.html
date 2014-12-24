@@ -10,39 +10,69 @@
             margin: 0;
             font: 14px/1.6 "Lucida Grande", "Helvetica", sans-serif;
             color: #333;
+            overflow: hidden;
         }
-        .wrapper {
-            max-width: 600px;
-            margin: 0 auto;
+        h1 {
             color: rgb(113, 113, 113);
+            text-align: center;
+            margin: 0;
+            padding-top: 50px;
         }
-        header {
-            margin: 50px 0;
+        p {
             text-align: center;
         }
-        section {
-            margin: 30px 0;
+        .controller {
+            position: fixed;
+            top: 50%;
+            right: 100px;
+        }
+        button {
+            margin: 20px;
+            cursor: pointer;
+            display: block;
+            background-color:#FA2;
+            border-radius:5px;
+            border:none;
+            font-size:16px;
+            font-weight:700;
+            height:32px;
+            padding:4px 16px;
         }
     </style>
 </head>
 
 <body>
-
-    <div class="wrapper">
-        <header>
-            <h1>Simple ScrollTo</h3>
-        </header>
-        <section>
-            Ooops... There is nothing here yet.
-        </section>
-        <div style="height: 2000px;"></div>
-        <div id="target"></div>
+    <div class="controller">
+        <button id="btn1">Scroll up!</button>
+        <button id="btn2">Scroll down!</button>
     </div>
+    <section>
+        <h1>Simple ScrollTo</h1>
+        <p>
+            Click buttons right to scroll!
+        </p>
+    </section>
+    <section style="background: #27ae60;"></section>
+    <section style="background: #2980b9;"></section>
+    <section style="background: #8e44ad;"></section>
+    <section style="background: #2c3e50;"></section>
     <script type="text/javascript" src="vendor/bower/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="vendor/bower/simple-module/lib/module.js"></script>
     <script type="text/javascript" src="lib/scrollTo.js"></script> 
     <script type="text/javascript">
+        $(document).ready(function(){
+            $('section').css('height', $(window).height())
+            $('#btn1').click(function(e){
+               simple.scrollTo({
+                   offset: $('body, html').scrollTop() - $(window).height()
+               })
+            });
 
+            $('#btn2').click(function(e){
+               simple.scrollTo({
+                   offset: $('body, html').scrollTop() + $(window).height()
+               });
+            });
+        });
     </script>
 </body>
 
