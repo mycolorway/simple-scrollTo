@@ -45,7 +45,6 @@ module.exports = (grunt) ->
       test:
         src: ['lib/**/*.js']
         options:
-          outfile: 'spec/index.html'
           specs: 'spec/scrollTo-spec.js'
           vendor: [
             'vendor/bower/jquery/dist/jquery.min.js'
