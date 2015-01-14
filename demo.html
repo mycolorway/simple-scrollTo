@@ -45,6 +45,7 @@
     <div class="controller">
         <button id="btn1">Scroll up!</button>
         <button id="btn2">Scroll down!</button>
+        <button id="btn3">Scroll to an element!</button>
     </div>
     <section>
         <h1>Simple ScrollTo</h1>
@@ -53,14 +54,16 @@
         </p>
     </section>
     <section style="background: #27ae60;"></section>
-    <section style="background: #2980b9;"></section>
+    <section style="background: #2980b9;">
+        <h1 id="hello" style="color:white;">Hello!</h1>
+    </section>
     <section style="background: #8e44ad;"></section>
     <section style="background: #2c3e50;"></section>
     <script type="text/javascript" src="vendor/bower/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="lib/scrollTo.js"></script> 
     <script type="text/javascript">
         $(document).ready(function(){
-            $('section').css('height', $(window).height())
+            $('section').css({'height': $(window).height()})
             $('#btn1').click(function(e){
                simple.scrollTo({
                    offset: $('body, html').scrollTop() - $(window).height()
@@ -71,6 +74,11 @@
                simple.scrollTo({
                    offset: $('body, html').scrollTop() + $(window).height()
                });
+            });
+            $('#btn3').on('click', function(e) {
+                simple.scrollTo({
+                    target: "#hello"
+                });
             });
         });
     </script>
