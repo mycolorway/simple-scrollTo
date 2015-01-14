@@ -72,6 +72,10 @@ __animation__
 
 Boolean，是否有滚动动画，默认为true
 
+__actOnVisible__
+
+Boolean, 若目标在可视区域，是否滚动，默认为 `true`
+
 __duration__
 
 Number，仅仅在animation为true时有效，滚动动画的时间
