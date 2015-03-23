@@ -7,7 +7,7 @@ scrollTo =  (opts) ->
     offset: null
     duration: 500
     animation: true
-    actOnVisible: true
+    cancelIfVisible: true
     callback: $.noop
 
   opts = $.extend defaultOpts, opts
@@ -34,14 +34,14 @@ scrollTo =  (opts) ->
       y: targetOffset.top - containerOffset.top - offset.y
       x: targetOffset.left - containerOffset.left - offset.x
 
-  unless opts.actOnVisible
+  if opts.cancelIfVisible
     if $container.is 'body'
       viewpartHeight = ($win = $ window).height()
       viewpartWidth = $win.width()
       scrollTop = ($doc = $ document).scrollTop()
       scrollLeft = $doc.scrollLeft()
     else
-      viewpartHeight = $container.height() 
+      viewpartHeight = $container.height()
       viewpartWidth = $container.width()
       scrollTop = $container.scrollTop()
       scrollLeft = $container.scrollLeft()
@@ -69,4 +69,3 @@ scrollTo =  (opts) ->
     $container.scrollTop(offset.x) if opts.axis isnt 'y'
     opts.callback()
     null
-
