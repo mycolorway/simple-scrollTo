@@ -29,13 +29,19 @@ scrollTo =  (opts) ->
   #set offset if scroll to target
   if $target
     targetOffset = $target.offset()
-    containerOffset = $container.offset() || {top: 0, left: 0}
+
+    if opts.container
+      containerOffset = $container.offset()
+      targetOffset =
+        top: targetOffset.top - containerOffset.top + $container.scrollTop()
+        left: targetOffset.left - containerOffset.left + $container.scrollLeft()
+
     offset =
-      y: targetOffset.top - containerOffset.top - offset.y
-      x: targetOffset.left - containerOffset.left - offset.x
+      y: targetOffset.top - offset.y
+      x: targetOffset.left - offset.x
 
   if opts.cancelIfVisible
-    if $container.is 'body'
+    unless opts.container
       viewpartHeight = ($win = $ window).height()
       viewpartWidth = $win.width()
       scrollTop = ($doc = $ document).scrollTop()
@@ -45,6 +51,7 @@ scrollTo =  (opts) ->
       viewpartWidth = $container.width()
       scrollTop = $container.scrollTop()
       scrollLeft = $container.scrollLeft()
+
     if (offset.y >= scrollTop and offset.y < scrollTop + viewpartHeight) \
         and (offset.x >= scrollLeft and offset.x < scrollLeft + viewpartWidth)
       return
@@ -66,6 +73,6 @@ scrollTo =  (opts) ->
 
   else
     $container.scrollTop(offset.y) if opts.axis isnt 'x'
-    $container.scrollTop(offset.x) if opts.axis isnt 'y'
+    $container.scrollLeft(offset.x) if opts.axis isnt 'y'
     opts.callback()
     null
