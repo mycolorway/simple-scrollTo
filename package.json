@@ -3,6 +3,7 @@
   "description": "A simple scrollTo component",
   "version": "1.0.3",
   "homepage": "https://github.com/mycolorway/simple-scrollTo",
+  "main": "lib/scrollTo.js",
   "author": {
     "name": "lcj",
     "email": "emlcjnil@gmail.com"
