@@ -50,7 +50,7 @@ simple.scrollTo({
 
 ### API 文档
 
-####自定义选项
+#### 自定义选项
 
 __target__
 
@@ -72,7 +72,7 @@ __animation__
 
 Boolean，是否有滚动动画，默认为true
 
-__actOnVisible__
+__cancelIfVisible__
 
 Boolean, 若目标在可视区域，是否滚动，默认为 `true`
 
